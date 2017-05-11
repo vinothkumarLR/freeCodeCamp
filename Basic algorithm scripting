@@ -1,0 +1,269 @@
+// factorial value of given number using recursion
+function fact(n) {
+   if(n == 0) {
+   		return 1; 
+   }
+	return n * fact(n - 1); 
+}
+
+// document.write(fact(5));
+
+// check the string whether it is palindrome or not
+function palindrome(str) {
+    var backward = "";
+    String.prototype.reverse = function () {
+        var reverse = "";
+	    for(var i = this.length - 1; i >= 0; i--) {
+		    reverse += this[i];
+        }
+        return reverse;
+    }
+    str = str.toLowerCase().replace(/[^0-9a-z]/gi, '');   
+    
+    backward = str.reverse();
+
+    return (backward === str) ? true : false;
+}
+
+/* document.write(palindrome("RaceCar"));
+document.write(palindrome("racecar"));
+document.write(palindrome("race CAR"));
+document.write(palindrome("2A3*3a2"));
+document.write(palindrome("2A3 3a2"));
+document.write(palindrome("2_A3*3#A2")); */
+
+// longest word in string
+function findLongestWord(str) {
+  var array, 
+      count = [];
+  array = str.split(" ");
+  array.forEach(function(each){
+    count.push(each.length);
+  });
+
+  count.sort(function(a, b) {
+      return a - b;
+  });
+  return count[count.length - 1];
+}
+
+// document.write(findLongestWord("What if we try a super-long word such as otorhinolaryngology"));
+
+// capitalize each word.
+function titleCase(str) {
+    var arr = [],
+        result = "";
+    String.prototype.capitalize = function () {
+        var string = "";
+        string = this.toLowerCase();
+        return string.charAt(0).toUpperCase() + string.slice(1);
+    }
+    arr = str.split(" ");
+
+    arr.forEach(function (each) {
+        result += each.capitalize() + " ";
+        console.log(each);
+    });
+    
+    return result.trim();
+}
+
+// document.write(titleCase("sHoRt AnD sToUt"));
+
+// find largest of all arrays
+function largestOfFour(arr) {
+    var result = [];
+    for (var i = 0; i <= arr.length - 1; i++) {
+        arr[i].sort(function (a, b) {
+            return b - a;
+        });
+        result.push(arr[i][0]);
+  }
+  return result;
+}
+
+// document.write(largestOfFour([[4, 5, 1, 3], [13, 27, 18, 26], [32, 35, 37, 39], [1000, 1001, 857, 1]]));
+
+// to find string ends with target
+function confirmEnding(str, target) {
+  return (str.substr(str.length - (target.length)) === target);
+}
+
+function repeatStringNumTimes(str, num) {
+    var result = str;
+    var add = str;
+    if (num > 0) {
+        for(var i = 2; i <= num; i++) {
+	    result = result + add;
+        }
+    } else {
+        result = "";
+    }
+    
+    return result;
+}
+
+// document.write(repeatStringNumTimes("abc", 3));
+// document.write(repeatStringNumTimes("abc", -2));
+
+// caesars cipher
+function rot13(str) { // LBH QVQ VG!
+
+    var alp = {},
+        result = "";
+
+    // get key from value in key-value store of pairs.
+    Object.prototype.getKeyByValue = function( value ) {
+    for( var prop in this ) {
+        if( this.hasOwnProperty( prop ) ) {
+            if( this[ prop ] === value )
+                return prop;
+            }
+        }
+    }
+
+    for (var i = 65; i <= 90; i++) {
+        alp[i] = String.fromCharCode(i);
+
+    }
+
+    for(var j=0; j <= str.length - 1; j++) {
+        var charCode,
+            diff;
+        if((/^[a-z]+$/i).test(str[j])) {
+           charCode = alp.getKeyByValue(str[j]);
+           charCode =  + charCode;
+           charCode += 13;
+           if(charCode > 90) {
+                diff = charCode - 90;
+                charCode = 65 + diff - 1;
+           }
+           result += String.fromCharCode(charCode);
+        } else {
+            result += str[j];
+        }
+    }
+
+
+  return result;
+}
+
+// Change the inputs below to test
+// document.write(rot13("SERR PBQR PNZC"));
+// document.write(rot13("SERR CVMMN!"));    
+
+// arrange element according to value by placing in the index
+function getIndexToIns(arr, num) {
+    var found = false;
+    // Find my place in this sorted array.
+    // sort small to big
+    arr.sort(function (a, b) {
+        return a - b;
+    });
+
+    arr.some(function (val, index){
+        if(!(num > val)) {
+            num = index;
+            found = true;		
+            return true;
+        } else {
+            if (index === arr.length - 1 && !found) {
+                num = index + 1;
+            }
+        }
+    }); 
+
+  return num;
+};
+
+// document.write(getIndexToIns([2, 20, 10], 19));
+
+function destroyer(arr) {
+  // Remove all the values
+  var parameters =  Array.from(arguments).splice(1);
+  for (var i=0; i <= arr.length -  1; i++) {
+    if (parameters.indexOf(arr[i]) >= 0) {
+        arr.splice(i, 1);
+        i--;
+    }
+  }
+
+  return arr;
+}
+
+// document.write(destroyer([1, 2, 3, 1, 2, 3], 2, 3));
+
+// remove all false data types of JS
+function bouncer(arr) {
+  // Don't show a false ID to this bouncer.
+  var falseArray = ["", null, false, 0, undefined, NaN];
+  return arr.filter(function (val) {
+      var choose = false;
+      if(isNaN(val)     ) {
+          choose = false;
+      } else {
+          choose = falseArray.indexOf(val) === -1;
+      }
+    return choose;
+  });
+}
+
+// document.write(bouncer(["a", "b", "c"]));
+
+// exist the character present in one string
+function mutation(arr) {    
+  var charArray = arr[1].toLowerCase().split("");
+  var toSearch = arr[0].toLowerCase();
+  var isExist = true;
+  for(var i = 0; i<= charArray.length - 1; i++) {
+        if(! (toSearch.indexOf(charArray[i]) >= 0)) {
+            isExist = false;
+        }
+  }
+  return isExist;
+}
+
+// document.write(mutation(["hello", "Hello"]));
+
+// splice array at a given position
+function slasher(arr, howMany) {
+  // it doesn't always pay to be first
+  return howMany <= arr.length ? arr.splice(howMany) : [];
+}
+
+// document.write(slasher([1, 2, 3], 9));
+// slice array in given length
+function chunkArrayInGroups(arr, size) {
+  // Break it up.
+  var result = [];
+
+  var start = 0;
+  while (start < arr.length) {
+     result.push(arr.slice(start, start + size));
+     start += size;
+  }
+  return result;
+}
+
+// document.write(chunkArrayInGroups([0, 1, 2, 3, 4, 5], 2));
+
+
+// reduce the string to the desired conditions
+function truncateString(str, num) {
+  // Clear out that junk in your trunk
+  var result = "";
+  if (num <= 3) {
+    result = str.slice(0, num) + "...";    
+  } else if(str.length > num){
+    result = str.slice(0, num - 3) + "...";
+  } else {
+    result = str.slice(0, num);
+  }
+  return result;
+}
+
+document.write(truncateString("Absolutely Longer", 2));
+
+
+
+
